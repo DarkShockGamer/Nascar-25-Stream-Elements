@@ -1,0 +1,392 @@
+/*
+ * chat.css
+ * Chat box widget with styled scrollbar and message formatting
+ * NASCAR 25 themed for 21:9 ultrawide
+ */
+
+/* ============================================================
+   CHAT WIDGET CONTAINER
+   ============================================================ */
+#chat-widget {
+  width: clamp(320px, 25vw, 480px);
+  height: clamp(400px, 35vh, 600px);
+  background: var(--bg-dark);
+  border: 3px solid var(--secondary-color);
+  border-radius: var(--border-radius);
+  box-shadow: 
+    0 6px 20px var(--shadow-color),
+    0 0 20px rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  animation: slideInLeft var(--transition-slow) ease;
+}
+
+/* ============================================================
+   CHAT HEADER
+   ============================================================ */
+.chat-header {
+  background: linear-gradient(
+    180deg,
+    var(--bg-dark) 0%,
+    var(--bg-darker) 100%
+  );
+  border-bottom: 2px solid var(--secondary-color);
+  padding: var(--padding-sm) var(--padding-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  clip-path: polygon(0 0, 100% 0, 98% 100%, 0 100%);
+  position: relative;
+}
+
+.chat-header::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--racing-blue) 0%,
+    var(--racing-yellow) 50%,
+    var(--racing-red) 100%
+  );
+}
+
+.chat-title {
+  font-size: clamp(0.95rem, 1.1vw, 1.2rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--text-color);
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+  transform: skewX(-5deg);
+}
+
+.chat-status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--racing-red);
+  box-shadow: 0 0 10px var(--racing-red);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.chat-status.connected {
+  background: #00ff00;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+/* ============================================================
+   CHAT MESSAGES CONTAINER
+   ============================================================ */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--padding-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-sm);
+  background: var(--carbon-fiber);
+  position: relative;
+}
+
+/* Custom scrollbar styling */
+.chat-messages::-webkit-scrollbar {
+  width: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: var(--bg-darker);
+  border-radius: var(--border-radius);
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: var(--border-radius);
+  border: 2px solid var(--bg-darker);
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
+  box-shadow: 0 0 8px var(--accent-color);
+}
+
+/* Firefox scrollbar */
+.chat-messages {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary-color) var(--bg-darker);
+}
+
+/* ============================================================
+   INDIVIDUAL CHAT MESSAGE
+   ============================================================ */
+.chat-message {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--padding-sm);
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 3px solid var(--border-color);
+  border-radius: var(--border-radius);
+  animation: fadeIn var(--transition-fast);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.chat-message:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-left-color: var(--accent-color);
+}
+
+/* Message header (username + timestamp) */
+.message-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--padding-sm);
+}
+
+.message-username {
+  font-size: clamp(0.85rem, 0.95vw, 1rem);
+  font-weight: 700;
+  color: var(--accent-color);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  text-transform: capitalize;
+}
+
+/* Badge system (subscriber, mod, etc.) */
+.message-badges {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.badge {
+  font-size: clamp(0.65rem, 0.75vw, 0.8rem);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge.subscriber {
+  background: var(--racing-yellow);
+  color: var(--bg-dark);
+}
+
+.badge.moderator {
+  background: var(--racing-blue);
+  color: var(--text-color);
+}
+
+.badge.vip {
+  background: var(--racing-red);
+  color: var(--text-color);
+}
+
+.badge.broadcaster {
+  background: var(--neon-color);
+  color: var(--bg-dark);
+  font-weight: 900;
+}
+
+.message-timestamp {
+  font-size: clamp(0.7rem, 0.8vw, 0.85rem);
+  color: var(--text-color);
+  opacity: 0.5;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Message content */
+.message-content {
+  font-size: clamp(0.85rem, 0.95vw, 1rem);
+  color: var(--text-color);
+  line-height: 1.5;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* ============================================================
+   MESSAGE TYPE VARIATIONS
+   ============================================================ */
+/* System messages (follows, subs, etc.) */
+.chat-message.system {
+  background: rgba(255, 255, 255, 0.05);
+  border-left-color: var(--accent-color);
+  border-left-width: 4px;
+}
+
+.chat-message.system .message-content {
+  color: var(--accent-color);
+  font-weight: 600;
+  font-style: italic;
+}
+
+/* Highlighted/mentioned messages */
+.chat-message.highlighted {
+  background: rgba(255, 215, 0, 0.1);
+  border-left-color: var(--racing-yellow);
+  border-left-width: 4px;
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Cheer messages */
+.chat-message.cheer {
+  background: rgba(147, 51, 234, 0.1);
+  border-left-color: var(--neon-color);
+  border-left-width: 4px;
+}
+
+.chat-message.cheer .message-content {
+  color: var(--neon-color);
+  font-weight: 700;
+}
+
+/* ============================================================
+   EMOTE SUPPORT (placeholder)
+   ============================================================ */
+.emote {
+  display: inline-block;
+  vertical-align: middle;
+  max-height: 28px;
+  max-width: 28px;
+  margin: 0 2px;
+}
+
+/* ============================================================
+   CHAT FOOTER (Optional input area - usually not needed for OBS)
+   ============================================================ */
+.chat-footer {
+  background: var(--bg-darker);
+  border-top: 2px solid var(--border-color);
+  padding: var(--padding-sm) var(--padding-md);
+  display: none; /* Hidden by default for OBS overlay */
+}
+
+/* ============================================================
+   RACING STRIPE ACCENT
+   ============================================================ */
+.chat-racing-stripe {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    var(--racing-red) 0%,
+    var(--racing-yellow) 50%,
+    var(--racing-blue) 100%
+  );
+  opacity: 0.5;
+}
+
+/* ============================================================
+   CORNER DECORATIONS
+   ============================================================ */
+.chat-corner {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border: 2px solid var(--neon-color);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.chat-corner.top-left {
+  top: 4px;
+  left: 4px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.chat-corner.bottom-left {
+  bottom: 4px;
+  left: 4px;
+  border-right: none;
+  border-top: none;
+}
+
+/* ============================================================
+   LOADING / EMPTY STATE
+   ============================================================ */
+.chat-empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  opacity: 0.5;
+  font-size: clamp(0.9rem, 1vw, 1.1rem);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes chatMessageSlide {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.chat-message {
+  animation: chatMessageSlide var(--transition-fast);
+}
+
+/* ============================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================ */
+@media (max-width: 2559px) {
+  #chat-widget {
+    width: clamp(280px, 22vw, 400px);
+    height: clamp(350px, 30vh, 500px);
+  }
+  
+  .chat-messages {
+    padding: var(--padding-sm);
+  }
+}
+
+@media (min-width: 3440px) {
+  #chat-widget {
+    width: clamp(400px, 28vw, 560px);
+    height: clamp(450px, 40vh, 700px);
+  }
+}
+
+/* ============================================================
+   COMPACT MODE (smaller widget variant)
+   ============================================================ */
+.chat-widget-compact {
+  width: clamp(240px, 18vw, 320px);
+  height: clamp(300px, 25vh, 400px);
+}
+
+.chat-widget-compact .chat-messages {
+  padding: var(--padding-sm);
+  gap: 6px;
+}
+
+.chat-widget-compact .chat-message {
+  padding: 6px;
+}
+
+.chat-widget-compact .message-username {
+  font-size: clamp(0.75rem, 0.85vw, 0.9rem);
+}
+
+.chat-widget-compact .message-content {
+  font-size: clamp(0.75rem, 0.85vw, 0.9rem);
+}

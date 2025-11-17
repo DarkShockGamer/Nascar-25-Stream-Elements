@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NASCAR 25 - Chat Box Widget</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="../assets/css/shared.css">
+  <link rel="stylesheet" href="../assets/css/chat.css">
+</head>
+<body>
+  <!-- Chat Widget -->
+  <div id="chat-widget">
+    
+    <!-- Chat Header -->
+    <div class="chat-header">
+      <h3 class="chat-title">Stream Chat</h3>
+      <div class="chat-status" title="Chat Status"></div>
+    </div>
+    
+    <!-- Chat Messages Container -->
+    <div class="chat-messages">
+      <!-- Messages will be dynamically inserted here -->
+    </div>
+    
+    <!-- Corner Decorations -->
+    <div class="chat-corner top-left"></div>
+    <div class="chat-corner bottom-left"></div>
+    
+    <!-- Racing Stripe Accent -->
+    <div class="chat-racing-stripe"></div>
+    
+  </div>
+  
+  <!-- JavaScript -->
+  <script src="../assets/js/shared.js"></script>
+  <script src="../assets/js/chat.js"></script>
+  
+  <script>
+    // Additional custom initialization if needed
+    onReady(() => {
+      console.log('Chat widget ready');
+      
+      // Optional: Disable demo mode if connecting to real chat
+      // To disable demo mode, set CHAT_CONFIG.DEMO_INTERVAL = 0 in chat.js
+      // or call: stopChatDemo();
+      
+      // Optional: Configure chat settings
+      // CHAT_CONFIG.MAX_MESSAGES = 100;
+      // setAutoScroll(true);
+      
+      // Example: Connect to Twitch IRC or PubSub
+      /*
+      // Twitch IRC example (using tmi.js library):
+      const tmi = require('tmi.js');
+      
+      const client = new tmi.Client({
+        channels: ['your_channel_name']
+      });
+      
+      client.connect();
+      
+      client.on('message', (channel, tags, message, self) => {
+        // Determine badges
+        const badges = [];
+        if (tags.badges) {
+          if (tags.badges.broadcaster) badges.push('broadcaster');
+          if (tags.badges.moderator) badges.push('moderator');
+          if (tags.badges.subscriber) badges.push('subscriber');
+          if (tags.badges.vip) badges.push('vip');
+        }
+        
+        // Add chat line
+        addChatLine({
+          username: tags['display-name'] || tags.username,
+          message: message,
+          badges: badges,
+          color: tags.color || null,
+          highlighted: tags['msg-id'] === 'highlighted-message'
+        });
+      });
+      
+      client.on('subscription', (channel, username, method, message, userstate) => {
+        addSystemMessage(`${username} just subscribed!`);
+      });
+      
+      client.on('cheer', (channel, userstate, message) => {
+        addChatLine({
+          username: userstate['display-name'],
+          message: message,
+          badges: [],
+          cheer: true,
+          bits: parseInt(userstate.bits),
+          color: userstate.color
+        });
+      });
+      
+      // Update connection status
+      client.on('connected', () => {
+        setChatStatus(true);
+      });
+      
+      client.on('disconnected', () => {
+        setChatStatus(false);
+      });
+      */
+      
+      // Example: Manual chat detection (user scrolling away from bottom)
+      const chatMessages = document.querySelector('.chat-messages');
+      if (chatMessages) {
+        chatMessages.addEventListener('scroll', () => {
+          const isAtBottom = chatMessages.scrollHeight - chatMessages.scrollTop <= chatMessages.clientHeight + 50;
+          setAutoScroll(isAtBottom);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

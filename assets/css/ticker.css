@@ -1,0 +1,374 @@
+/*
+ * ticker.css
+ * Scrolling marquee ticker bar for latest events
+ * NASCAR 25 themed with infinite scroll animation
+ */
+
+/* ============================================================
+   TICKER WIDGET CONTAINER
+   ============================================================ */
+#ticker-widget {
+  width: 100vw;
+  height: clamp(40px, 4vh, 60px);
+  background: var(--bg-dark);
+  border-top: 2px solid var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  box-shadow: 
+    0 4px 12px var(--shadow-color),
+    inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================================
+   RACING STRIPE BORDERS
+   ============================================================ */
+#ticker-widget::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--racing-red) 0%,
+    var(--racing-yellow) 33%,
+    var(--racing-blue) 66%,
+    var(--racing-red) 100%
+  );
+  z-index: 10;
+}
+
+#ticker-widget::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--racing-blue) 0%,
+    var(--racing-yellow) 33%,
+    var(--racing-red) 66%,
+    var(--racing-blue) 100%
+  );
+  z-index: 10;
+}
+
+/* ============================================================
+   TICKER LABEL (Left side static branding)
+   ============================================================ */
+.ticker-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: clamp(120px, 12vw, 200px);
+  background: linear-gradient(
+    90deg,
+    var(--bg-darker) 0%,
+    var(--bg-dark) 100%
+  );
+  border-right: 3px solid var(--accent-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
+}
+
+.ticker-label-text {
+  font-size: clamp(0.9rem, 1.1vw, 1.2rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--text-color);
+  letter-spacing: 2px;
+  text-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.9),
+    0 0 10px var(--accent-color);
+  transform: skewX(-5deg);
+}
+
+/* ============================================================
+   TICKER CONTENT (Scrolling area)
+   ============================================================ */
+.ticker-content {
+  position: absolute;
+  left: clamp(120px, 12vw, 200px);
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: var(--carbon-fiber);
+}
+
+/* Ticker track (contains duplicated items for infinite scroll) */
+.ticker-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(40px, 5vw, 80px);
+  white-space: nowrap;
+  animation: scroll-ticker 30s linear infinite;
+  padding: 0 clamp(40px, 5vw, 80px);
+}
+
+/* Pause on hover (optional) */
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/* ============================================================
+   TICKER ITEM
+   ============================================================ */
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--padding-sm);
+  font-size: clamp(0.85rem, 1vw, 1.1rem);
+  color: var(--text-color);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Ticker icon */
+.ticker-icon {
+  width: clamp(20px, 2.5vw, 32px);
+  height: clamp(20px, 2.5vw, 32px);
+  border-radius: 50%;
+  background: var(--accent-color);
+  border: 2px solid var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(0.75rem, 0.9vw, 1rem);
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+/* Ticker text */
+.ticker-text {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+}
+
+.ticker-username {
+  color: var(--accent-color);
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.ticker-action {
+  color: var(--text-color);
+  opacity: 0.9;
+}
+
+.ticker-detail {
+  color: var(--racing-yellow);
+  font-weight: 700;
+}
+
+/* ============================================================
+   TICKER TYPE VARIATIONS
+   ============================================================ */
+.ticker-item[data-type="follow"] .ticker-icon {
+  background: var(--racing-blue);
+  box-shadow: 0 0 10px var(--racing-blue);
+}
+
+.ticker-item[data-type="subscribe"] .ticker-icon {
+  background: var(--racing-yellow);
+  color: var(--bg-dark);
+  box-shadow: 0 0 10px var(--racing-yellow);
+}
+
+.ticker-item[data-type="donation"] .ticker-icon {
+  background: var(--racing-red);
+  box-shadow: 0 0 10px var(--racing-red);
+}
+
+.ticker-item[data-type="cheer"] .ticker-icon {
+  background: var(--neon-color);
+  box-shadow: 0 0 10px var(--neon-color);
+}
+
+/* ============================================================
+   TICKER SEPARATOR
+   ============================================================ */
+.ticker-separator {
+  display: inline-block;
+  width: 2px;
+  height: clamp(20px, 2.5vh, 30px);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--border-color) 50%,
+    transparent 100%
+  );
+  opacity: 0.5;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes scroll-ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Speed variants */
+.ticker-track.slow {
+  animation-duration: 45s;
+}
+
+.ticker-track.fast {
+  animation-duration: 20s;
+}
+
+/* ============================================================
+   EDGE FADE GRADIENTS (for smooth visual scroll)
+   ============================================================ */
+.ticker-content::before,
+.ticker-content::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.ticker-content::before {
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    var(--carbon-fiber) 0%,
+    transparent 100%
+  );
+}
+
+.ticker-content::after {
+  right: 0;
+  background: linear-gradient(
+    270deg,
+    var(--carbon-fiber) 0%,
+    transparent 100%
+  );
+}
+
+/* ============================================================
+   GLOW EFFECT ON LABEL
+   ============================================================ */
+.ticker-label::after {
+  content: '';
+  position: absolute;
+  right: -3px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--accent-color);
+  box-shadow: 0 0 10px var(--accent-color);
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================ */
+@media (max-width: 2559px) {
+  .ticker-label {
+    width: clamp(100px, 10vw, 150px);
+  }
+  
+  .ticker-content {
+    left: clamp(100px, 10vw, 150px);
+  }
+  
+  .ticker-track {
+    gap: clamp(30px, 4vw, 60px);
+    padding: 0 clamp(30px, 4vw, 60px);
+  }
+}
+
+@media (min-width: 3440px) {
+  .ticker-label {
+    width: clamp(150px, 14vw, 250px);
+  }
+  
+  .ticker-content {
+    left: clamp(150px, 14vw, 250px);
+  }
+  
+  .ticker-track {
+    gap: clamp(50px, 6vw, 100px);
+    padding: 0 clamp(50px, 6vw, 100px);
+  }
+}
+
+/* ============================================================
+   BOTTOM PLACEMENT VARIANT
+   ============================================================ */
+#ticker-widget.bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+/* ============================================================
+   TOP PLACEMENT VARIANT
+   ============================================================ */
+#ticker-widget.top {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+/* ============================================================
+   ACCESSIBILITY
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  
+  .ticker-track::-webkit-scrollbar {
+    height: 4px;
+  }
+  
+  .ticker-track::-webkit-scrollbar-track {
+    background: var(--bg-darker);
+  }
+  
+  .ticker-track::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+  }
+}
+
+/* ============================================================
+   EMPTY / LOADING STATE
+   ============================================================ */
+.ticker-empty {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--text-color);
+  opacity: 0.5;
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  z-index: 5;
+}

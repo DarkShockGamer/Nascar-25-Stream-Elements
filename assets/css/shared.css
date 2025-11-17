@@ -1,0 +1,378 @@
+/*
+ * shared.css
+ * Global reset, CSS variables, textures, animations, and utility classes
+ * for NASCAR 25 Stream Overlay Asset Pack (Ultrawide 21:9)
+ */
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-color);
+  background: transparent;
+}
+
+/* ============================================================
+   CSS VARIABLES (Color Tokens)
+   Replace these placeholders with your channel brand colors:
+   ============================================================ */
+:root {
+  /* Primary brand color (e.g., team or channel primary) */
+  --primary-color: YOUR_PRIMARY_COLOR;
+  
+  /* Secondary brand color (used for accents and borders) */
+  --secondary-color: YOUR_SECONDARY_COLOR;
+  
+  /* Accent color (buttons, highlights) */
+  --accent-color: YOUR_ACCENT_COLOR;
+  
+  /* Neon glow color (racing theme neon accents) */
+  --neon-color: YOUR_NEON_COLOR;
+  
+  /* Text color (high contrast readable) */
+  --text-color: YOUR_TEXT_COLOR;
+  
+  /* Dark background color (panels, bars) */
+  --bg-dark: YOUR_BG_DARK;
+  
+  /* Derived/utility colors */
+  --bg-darker: rgba(0, 0, 0, 0.85);
+  --bg-lighter: rgba(255, 255, 255, 0.1);
+  --border-color: rgba(255, 255, 255, 0.2);
+  --shadow-color: rgba(0, 0, 0, 0.6);
+  
+  /* NASCAR racing theme colors (fallbacks if placeholders not replaced) */
+  --racing-red: #E10600;
+  --racing-yellow: #FDB813;
+  --racing-blue: #0033A0;
+  --carbon-fiber: #1a1a1a;
+  --metal-gray: #888888;
+  
+  /* Sizing & spacing (fluid scaling for 21:9) */
+  --bar-height: clamp(60px, 5vh, 100px);
+  --padding-md: clamp(12px, 1.5vw, 24px);
+  --padding-sm: clamp(8px, 1vw, 16px);
+  --border-radius: 4px;
+  --border-width: 2px;
+  
+  /* Animation timing */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.4s ease;
+  --transition-slow: 0.6s ease;
+}
+
+/* ============================================================
+   TEXTURES & PATTERNS
+   ============================================================ */
+.carbon-fiber {
+  background: 
+    repeating-linear-gradient(
+      45deg,
+      rgba(0,0,0,0.3) 0px,
+      rgba(0,0,0,0.3) 2px,
+      transparent 2px,
+      transparent 4px
+    ),
+    var(--carbon-fiber);
+}
+
+.racing-stripes {
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 255, 255, 0.05) 10px,
+    rgba(255, 255, 255, 0.05) 12px
+  );
+}
+
+.metallic-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--metal-gray) 0%,
+    rgba(200, 200, 200, 0.8) 50%,
+    var(--metal-gray) 100%
+  );
+}
+
+/* ============================================================
+   NEON GLOW EFFECTS
+   ============================================================ */
+.neon-glow {
+  text-shadow: 
+    0 0 5px var(--neon-color),
+    0 0 10px var(--neon-color),
+    0 0 20px var(--neon-color);
+}
+
+.neon-border {
+  border: var(--border-width) solid var(--neon-color);
+  box-shadow: 
+    0 0 10px var(--neon-color),
+    inset 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.neon-box-glow {
+  box-shadow: 
+    0 0 20px var(--neon-color),
+    inset 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%) skewX(-10deg);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) skewX(-10deg);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0) skewX(-10deg);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%) skewX(-10deg);
+    opacity: 0;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%) skewX(10deg);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) skewX(10deg);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0) skewX(10deg);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%) skewX(10deg);
+    opacity: 0;
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 10px var(--neon-color);
+  }
+  50% {
+    box-shadow: 0 0 25px var(--neon-color);
+  }
+}
+
+@keyframes scroll-ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+.skew-left {
+  transform: skewX(-10deg);
+}
+
+.skew-right {
+  transform: skewX(10deg);
+}
+
+.clip-angled-left {
+  clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
+}
+
+.clip-angled-right {
+  clip-path: polygon(5% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.pointer-events-none {
+  pointer-events: none;
+}
+
+/* High contrast text readability */
+.text-shadow-strong {
+  text-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.9),
+    -1px -1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Racing accent bar (decorative element) */
+.racing-accent-bar {
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--racing-red) 0%,
+    var(--racing-yellow) 50%,
+    var(--racing-blue) 100%
+  );
+}
+
+/* Panel styling */
+.panel {
+  background: var(--bg-dark);
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--padding-md);
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+/* Button styling (if needed for interactive elements) */
+.button {
+  background: var(--accent-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: var(--padding-sm) var(--padding-md);
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--accent-color);
+}
+
+/* ============================================================
+   RESPONSIVE ADJUSTMENTS (21:9 Ultrawide Focus)
+   ============================================================ */
+/* Base: 2560x1080 */
+@media (min-width: 2560px) and (max-width: 3439px) {
+  :root {
+    font-size: 15px;
+  }
+}
+
+/* Larger: 3440x1440 */
+@media (min-width: 3440px) {
+  :root {
+    font-size: 18px;
+  }
+}
+
+/* Accessibility: ensure readability */
+@media (max-width: 2559px) {
+  :root {
+    font-size: 14px;
+  }
+}

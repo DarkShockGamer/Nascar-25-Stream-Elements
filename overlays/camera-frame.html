@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NASCAR 25 - Driver Camera Frame</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="../assets/css/shared.css">
+  <link rel="stylesheet" href="../assets/css/camera.css">
+</head>
+<body>
+  <!-- Camera Widget -->
+  <div id="camera-widget">
+    
+    <!-- Camera Feed (video element or placeholder) -->
+    <div id="camera-feed">
+      <!-- Replace with actual video element:
+      <video id="camera-video" autoplay muted></video>
+      -->
+      <span>DRIVER CAM</span>
+    </div>
+    
+    <!-- Camera Frame Overlay -->
+    <div class="camera-frame-overlay">
+      
+      <!-- Top Bar -->
+      <div class="camera-top-bar">
+        <span class="camera-driver-name">Driver Name</span>
+        <div class="camera-indicator"></div>
+      </div>
+      
+      <!-- Bottom Bar -->
+      <div class="camera-bottom-bar">
+        <span class="camera-label">Driver Cam</span>
+      </div>
+      
+      <!-- Corner Decorations -->
+      <div class="camera-corner top-left"></div>
+      <div class="camera-corner top-right"></div>
+      <div class="camera-corner bottom-left"></div>
+      <div class="camera-corner bottom-right"></div>
+      
+      <!-- Racing Stripe Accent -->
+      <div class="camera-racing-stripe"></div>
+      
+      <!-- Status Indicators (Optional) -->
+      <div class="camera-status">
+        <div class="status-icon" title="Audio">🎤</div>
+        <div class="status-icon active" title="Recording">⏺️</div>
+      </div>
+      
+    </div>
+    
+  </div>
+  
+  <!-- JavaScript -->
+  <script src="../assets/js/shared.js"></script>
+  
+  <script>
+    // Custom initialization for camera frame
+    onReady(() => {
+      logInit('Camera Frame');
+      
+      // Optional: Initialize webcam/camera feed
+      // Example using getUserMedia:
+      /*
+      async function initCamera() {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ 
+            video: true, 
+            audio: false 
+          });
+          
+          const videoElement = document.getElementById('camera-video');
+          if (videoElement) {
+            videoElement.srcObject = stream;
+          }
+        } catch (err) {
+          console.error('Error accessing camera:', err);
+        }
+      }
+      
+      initCamera();
+      */
+      
+      // Optional: Update driver name dynamically
+      function updateDriverName(name) {
+        const nameElement = document.querySelector('.camera-driver-name');
+        if (nameElement) {
+          nameElement.textContent = name;
+        }
+      }
+      
+      // Optional: Toggle status indicators
+      function toggleStatus(iconIndex, active) {
+        const icons = document.querySelectorAll('.status-icon');
+        if (icons[iconIndex]) {
+          if (active) {
+            icons[iconIndex].classList.add('active');
+          } else {
+            icons[iconIndex].classList.remove('active');
+          }
+        }
+      }
+      
+      // Make functions globally available
+      window.updateDriverName = updateDriverName;
+      window.toggleStatus = toggleStatus;
+      
+      // Example: Set driver name from URL parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const driverName = urlParams.get('driver');
+      if (driverName) {
+        updateDriverName(driverName);
+      }
+    });
+  </script>
+</body>
+</html>

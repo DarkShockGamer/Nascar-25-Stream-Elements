@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NASCAR 25 - Alerts Widget</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="../assets/css/shared.css">
+  <link rel="stylesheet" href="../assets/css/alerts.css">
+</head>
+<body>
+  <!-- Alerts Container -->
+  <div id="alerts-container">
+    <!-- Alerts will be dynamically inserted here -->
+  </div>
+  
+  <!-- JavaScript -->
+  <script src="../assets/js/shared.js"></script>
+  <script src="../assets/js/alerts.js"></script>
+  
+  <script>
+    // Additional custom initialization if needed
+    onReady(() => {
+      console.log('Alerts widget ready');
+      
+      // Optional: Disable demo mode if connecting to real events
+      // To disable demo mode, set ALERT_CONFIG.DEMO_INTERVAL = 0 in alerts.js
+      // or call: stopDemoMode();
+      
+      // Optional: Configure alert lifetime
+      // ALERT_CONFIG.ALERT_LIFETIME = 10000; // 10 seconds
+      
+      // Example: Listen for URL parameters to trigger specific alert
+      const urlParams = new URLSearchParams(window.location.search);
+      const testAlert = urlParams.get('test');
+      
+      if (testAlert) {
+        // Trigger test alert based on parameter
+        setTimeout(() => {
+          createAlert({
+            type: testAlert,
+            username: 'TestUser',
+            message: 'This is a test alert',
+            amount: 50,
+            bits: 1000,
+            months: 6
+          });
+        }, 1000);
+      }
+      
+      // Example: Connect to StreamElements or Twitch events
+      /*
+      // StreamElements example (pseudo-code):
+      const ws = new WebSocket('wss://realtime.streamelements.com/socket.io/?token=YOUR_TOKEN');
+      
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        
+        if (data.type === 'follower') {
+          createAlert({
+            type: 'follow',
+            username: data.data.displayName
+          });
+        }
+        
+        if (data.type === 'subscriber') {
+          createAlert({
+            type: 'subscribe',
+            username: data.data.displayName,
+            months: data.data.months || 1
+          });
+        }
+        
+        if (data.type === 'tip') {
+          createAlert({
+            type: 'donation',
+            username: data.data.username,
+            amount: data.data.amount,
+            message: data.data.message,
+            mega: data.data.amount >= 50
+          });
+        }
+        
+        if (data.type === 'cheer') {
+          createAlert({
+            type: 'cheer',
+            username: data.data.displayName,
+            bits: data.data.amount,
+            message: data.data.message,
+            mega: data.data.amount >= 5000
+          });
+        }
+      };
+      */
+    });
+  </script>
+</body>
+</html>

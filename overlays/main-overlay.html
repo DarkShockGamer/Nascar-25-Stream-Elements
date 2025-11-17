@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NASCAR 25 - Main Overlay</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="../assets/css/shared.css">
+  <link rel="stylesheet" href="../assets/css/overlay.css">
+</head>
+<body>
+  <!-- Main Overlay Root -->
+  <div id="overlay-root">
+    
+    <!-- Top Bar (Header HUD) -->
+    <div id="top-bar">
+      <!-- Left Section -->
+      <div class="top-bar-left">
+        <div class="overlay-logo">NASCAR 25</div>
+        
+        <div class="stream-info">
+          <span class="label">Now Streaming</span>
+          <span class="value">Daytona 500 Practice</span>
+        </div>
+      </div>
+      
+      <!-- Center Section -->
+      <div class="top-bar-center">
+        <div class="stat-box">
+          <span class="label">Viewers</span>
+          <span class="value">1,234</span>
+        </div>
+        
+        <div class="stat-box">
+          <span class="label">Followers</span>
+          <span class="value">5.6K</span>
+        </div>
+        
+        <div class="stat-box">
+          <span class="label">Uptime</span>
+          <span class="value">2:45</span>
+        </div>
+      </div>
+      
+      <!-- Right Section -->
+      <div class="top-bar-right">
+        <div class="stream-info">
+          <span class="label">Broadcaster</span>
+          <span class="value">YourChannelName</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Center Area (Game Capture - Transparent) -->
+    <div id="center-area">
+      <!-- This area remains transparent for game capture -->
+      <!-- Optional: Add corner accents for visual flair -->
+      <div class="corner-accent top-left"></div>
+      <div class="corner-accent top-right"></div>
+      <div class="corner-accent bottom-left"></div>
+      <div class="corner-accent bottom-right"></div>
+      
+      <!-- Optional: Racing stripes on edges -->
+      <div class="racing-stripe-left"></div>
+      <div class="racing-stripe-right"></div>
+    </div>
+    
+    <!-- Bottom Bar (Footer HUD) -->
+    <div id="bottom-bar">
+      <!-- Left Section -->
+      <div class="bottom-bar-left">
+        <div class="social-handle">
+          <span class="icon">📺</span>
+          <span>Twitch.tv/YourChannel</span>
+        </div>
+      </div>
+      
+      <!-- Center Section -->
+      <div class="bottom-bar-center">
+        <div class="race-info">
+          <div class="race-stat">
+            <span class="label">Position</span>
+            <span class="value">P1</span>
+          </div>
+          
+          <div class="race-stat">
+            <span class="label">Lap</span>
+            <span class="value">15/200</span>
+          </div>
+          
+          <div class="race-stat">
+            <span class="label">Gap</span>
+            <span class="value">+0.5s</span>
+          </div>
+          
+          <div class="race-stat">
+            <span class="label">Best Lap</span>
+            <span class="value">1:45.3</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Section -->
+      <div class="bottom-bar-right">
+        <div class="social-handle">
+          <span class="icon">🐦</span>
+          <span>@YourTwitter</span>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  
+  <!-- JavaScript -->
+  <script src="../assets/js/shared.js"></script>
+  
+  <script>
+    // Custom initialization for main overlay
+    onReady(() => {
+      logInit('Main Overlay');
+      
+      // Optional: Update stats dynamically
+      // Example: Update viewer count every 30 seconds
+      // setInterval(updateViewerCount, 30000);
+      
+      // Optional: Update uptime clock
+      function updateUptime() {
+        const uptimeElement = document.querySelector('.stat-box:nth-child(3) .value');
+        if (uptimeElement) {
+          // Calculate uptime based on stream start time
+          // This is a placeholder - replace with actual stream start time
+          const startTime = new Date().getTime() - (2 * 60 * 60 * 1000 + 45 * 60 * 1000); // 2h 45m ago
+          const now = new Date().getTime();
+          const diff = now - startTime;
+          
+          const hours = Math.floor(diff / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          
+          uptimeElement.textContent = `${hours}:${minutes.toString().padStart(2, '0')}`;
+        }
+      }
+      
+      // Update uptime every minute
+      setInterval(updateUptime, 60000);
+      
+      // Optional: Connect to real data sources
+      // connectEvents({ ... });
+    });
+  </script>
+</body>
+</html>
