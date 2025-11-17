@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NASCAR 25 - Ticker Widget</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="../assets/css/shared.css">
+  <link rel="stylesheet" href="../assets/css/ticker.css">
+</head>
+<body>
+  <!-- Ticker Widget -->
+  <div id="ticker-widget">
+    
+    <!-- Ticker Label (Static) -->
+    <div class="ticker-label">
+      <span class="ticker-label-text">Latest Events</span>
+    </div>
+    
+    <!-- Ticker Content (Scrolling) -->
+    <div class="ticker-content">
+      <!-- Ticker Track (items will be duplicated here) -->
+      <div class="ticker-track">
+        <!-- Ticker items will be dynamically inserted here -->
+      </div>
+    </div>
+    
+  </div>
+  
+  <!-- JavaScript -->
+  <script src="../assets/js/shared.js"></script>
+  <script src="../assets/js/ticker.js"></script>
+  
+  <script>
+    // Additional custom initialization if needed
+    onReady(() => {
+      console.log('Ticker widget ready');
+      
+      // Optional: Disable demo mode if connecting to real events
+      // To disable demo mode, set TICKER_CONFIG.DEMO_INTERVAL = 0 in ticker.js
+      // or call: stopTickerDemo();
+      
+      // Optional: Adjust scroll speed
+      // setTickerSpeed('slow');  // 'slow', 'normal', or 'fast'
+      
+      // Example: Listen for URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const speed = urlParams.get('speed');
+      if (speed) {
+        setTickerSpeed(speed);
+      }
+      
+      const position = urlParams.get('position');
+      if (position === 'top') {
+        document.getElementById('ticker-widget').classList.add('top');
+      } else if (position === 'bottom') {
+        document.getElementById('ticker-widget').classList.add('bottom');
+      }
+      
+      // Example: Add custom ticker items
+      /*
+      // Add a follow event
+      addTickerItem({
+        type: 'follow',
+        username: 'NewFollower123',
+        action: 'followed',
+        detail: ''
+      });
+      
+      // Add a subscription
+      addTickerItem({
+        type: 'subscribe',
+        username: 'SubberName',
+        action: 'subscribed for',
+        detail: '6 months'
+      });
+      
+      // Add a donation
+      addTickerItem({
+        type: 'donation',
+        username: 'GenerousDonor',
+        action: 'donated',
+        detail: '$25.00'
+      });
+      */
+      
+      // Example: Connect to event stream
+      /*
+      // Listen for custom events from main overlay or event system
+      window.addEventListener('message', (event) => {
+        if (event.data.type === 'ticker-event') {
+          addTickerItem(event.data.item);
+        }
+      });
+      
+      // Or connect to StreamElements/Twitch directly
+      const ws = new WebSocket('wss://your-event-source');
+      
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        
+        let tickerItem = null;
+        
+        switch (data.type) {
+          case 'follow':
+            tickerItem = {
+              type: 'follow',
+              username: data.username,
+              action: 'followed',
+              detail: ''
+            };
+            break;
+            
+          case 'subscribe':
+            tickerItem = {
+              type: 'subscribe',
+              username: data.username,
+              action: data.months > 1 ? 'subscribed for' : 'subscribed',
+              detail: data.months > 1 ? `${data.months} months` : ''
+            };
+            break;
+            
+          case 'donation':
+            tickerItem = {
+              type: 'donation',
+              username: data.username,
+              action: 'donated',
+              detail: formatCurrency(data.amount)
+            };
+            break;
+            
+          case 'cheer':
+            tickerItem = {
+              type: 'cheer',
+              username: data.username,
+              action: 'cheered',
+              detail: `${formatNumber(data.bits)} bits`
+            };
+            break;
+            
+          case 'raid':
+            tickerItem = {
+              type: 'raid',
+              username: data.username,
+              action: 'raided with',
+              detail: `${formatNumber(data.viewers)} viewers`
+            };
+            break;
+        }
+        
+        if (tickerItem) {
+          addTickerItem(tickerItem);
+        }
+      };
+      */
+      
+      // Optional: Pause ticker on hover (already in CSS but can be controlled via JS)
+      const tickerTrack = document.querySelector('.ticker-track');
+      if (tickerTrack) {
+        tickerTrack.addEventListener('mouseenter', pauseTicker);
+        tickerTrack.addEventListener('mouseleave', resumeTicker);
+      }
+    });
+  </script>
+</body>
+</html>

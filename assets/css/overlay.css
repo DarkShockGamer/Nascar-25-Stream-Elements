@@ -1,0 +1,394 @@
+/*
+ * overlay.css
+ * Main stream overlay layout with top & bottom HUD bars
+ * NASCAR 25 themed for 21:9 ultrawide resolutions
+ */
+
+/* ============================================================
+   OVERLAY CONTAINER
+   ============================================================ */
+#overlay-root {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: var(--bar-height) 1fr var(--bar-height);
+  grid-template-columns: 1fr;
+  pointer-events: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ============================================================
+   TOP BAR (Header HUD)
+   ============================================================ */
+#top-bar {
+  grid-row: 1;
+  background: linear-gradient(
+    180deg,
+    var(--bg-dark) 0%,
+    var(--bg-darker) 100%
+  );
+  border-bottom: var(--border-width) solid var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--padding-md);
+  position: relative;
+  z-index: 100;
+  animation: slideInDown var(--transition-slow) ease;
+}
+
+#top-bar::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--racing-red) 0%,
+    var(--racing-yellow) 33%,
+    var(--racing-blue) 66%,
+    var(--racing-red) 100%
+  );
+  animation: pulse 3s ease-in-out infinite;
+}
+
+/* Top bar sections */
+.top-bar-left,
+.top-bar-center,
+.top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--padding-md);
+  z-index: 101;
+}
+
+.top-bar-left {
+  flex: 1;
+  justify-content: flex-start;
+}
+
+.top-bar-center {
+  flex: 2;
+  justify-content: center;
+}
+
+.top-bar-right {
+  flex: 1;
+  justify-content: flex-end;
+}
+
+/* Logo / Branding */
+.overlay-logo {
+  font-size: clamp(1.2rem, 2vw, 2rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-color);
+  text-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.9),
+    0 0 10px var(--neon-color);
+  transform: skewX(-10deg);
+  padding: var(--padding-sm) var(--padding-md);
+  background: var(--carbon-fiber);
+  border: 2px solid var(--primary-color);
+  clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+}
+
+/* Stream info display */
+.stream-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: clamp(0.75rem, 1vw, 0.95rem);
+  color: var(--text-color);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.stream-info .label {
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.7;
+  font-size: 0.8em;
+}
+
+.stream-info .value {
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+/* Stats display (viewer count, uptime, etc.) */
+.stat-box {
+  background: var(--bg-darker);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--padding-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: clamp(80px, 8vw, 120px);
+  transform: skewX(-5deg);
+}
+
+.stat-box .label {
+  font-size: clamp(0.65rem, 0.8vw, 0.8rem);
+  text-transform: uppercase;
+  opacity: 0.7;
+  letter-spacing: 1px;
+}
+
+.stat-box .value {
+  font-size: clamp(1rem, 1.5vw, 1.5rem);
+  font-weight: 900;
+  color: var(--neon-color);
+  text-shadow: 0 0 8px var(--neon-color);
+}
+
+/* ============================================================
+   BOTTOM BAR (Footer HUD)
+   ============================================================ */
+#bottom-bar {
+  grid-row: 3;
+  background: linear-gradient(
+    0deg,
+    var(--bg-dark) 0%,
+    var(--bg-darker) 100%
+  );
+  border-top: var(--border-width) solid var(--secondary-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--padding-md);
+  position: relative;
+  z-index: 100;
+  animation: slideInUp var(--transition-slow) ease;
+}
+
+#bottom-bar::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--racing-blue) 0%,
+    var(--racing-yellow) 33%,
+    var(--racing-red) 66%,
+    var(--racing-blue) 100%
+  );
+  animation: pulse 3s ease-in-out infinite reverse;
+}
+
+/* Bottom bar sections */
+.bottom-bar-left,
+.bottom-bar-center,
+.bottom-bar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--padding-md);
+  z-index: 101;
+}
+
+.bottom-bar-left {
+  flex: 1;
+  justify-content: flex-start;
+}
+
+.bottom-bar-center {
+  flex: 2;
+  justify-content: center;
+}
+
+.bottom-bar-right {
+  flex: 1;
+  justify-content: flex-end;
+}
+
+/* Social media / handle display */
+.social-handle {
+  font-size: clamp(0.9rem, 1.2vw, 1.2rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-color);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+  padding: var(--padding-sm) var(--padding-md);
+  background: var(--bg-darker);
+  border: 1px solid var(--accent-color);
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transform: skewX(-5deg);
+}
+
+.social-handle .icon {
+  font-size: 1.2em;
+  color: var(--accent-color);
+}
+
+/* Race info / game state (lap count, position, etc.) */
+.race-info {
+  display: flex;
+  gap: var(--padding-md);
+  font-size: clamp(0.85rem, 1vw, 1rem);
+}
+
+.race-stat {
+  background: var(--carbon-fiber);
+  border: 2px solid var(--primary-color);
+  padding: var(--padding-sm) var(--padding-md);
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: clamp(70px, 7vw, 100px);
+}
+
+.race-stat .label {
+  font-size: 0.75em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  letter-spacing: 1px;
+}
+
+.race-stat .value {
+  font-size: 1.3em;
+  font-weight: 900;
+  color: var(--racing-yellow);
+  text-shadow: 0 0 6px var(--racing-yellow);
+}
+
+/* ============================================================
+   CENTER AREA (Game Capture Zone - Transparent)
+   ============================================================ */
+#center-area {
+  grid-row: 2;
+  /* This area remains transparent for game capture */
+  pointer-events: none;
+}
+
+/* ============================================================
+   DECORATIVE ELEMENTS
+   ============================================================ */
+.corner-accent {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border: 3px solid var(--neon-color);
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.corner-accent.top-left {
+  top: var(--padding-sm);
+  left: var(--padding-sm);
+  border-right: none;
+  border-bottom: none;
+  clip-path: polygon(0 0, 100% 0, 100% 3px, 3px 3px, 3px 100%, 0 100%);
+}
+
+.corner-accent.top-right {
+  top: var(--padding-sm);
+  right: var(--padding-sm);
+  border-left: none;
+  border-bottom: none;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, calc(100% - 3px) 100%, calc(100% - 3px) 3px, 0 3px);
+}
+
+.corner-accent.bottom-left {
+  bottom: var(--padding-sm);
+  left: var(--padding-sm);
+  border-right: none;
+  border-top: none;
+  clip-path: polygon(0 0, 3px 0, 3px calc(100% - 3px), 100% calc(100% - 3px), 100% 100%, 0 100%);
+}
+
+.corner-accent.bottom-right {
+  bottom: var(--padding-sm);
+  right: var(--padding-sm);
+  border-left: none;
+  border-top: none;
+  clip-path: polygon(0 calc(100% - 3px), calc(100% - 3px) calc(100% - 3px), calc(100% - 3px) 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Animated racing stripes on edges (optional decorative) */
+.racing-stripe-left {
+  position: absolute;
+  left: 0;
+  top: var(--bar-height);
+  bottom: var(--bar-height);
+  width: 8px;
+  background: repeating-linear-gradient(
+    0deg,
+    var(--racing-red) 0px,
+    var(--racing-red) 20px,
+    var(--racing-yellow) 20px,
+    var(--racing-yellow) 40px,
+    var(--racing-blue) 40px,
+    var(--racing-blue) 60px
+  );
+  opacity: 0.3;
+  pointer-events: none;
+  animation: scroll-stripe 2s linear infinite;
+}
+
+.racing-stripe-right {
+  position: absolute;
+  right: 0;
+  top: var(--bar-height);
+  bottom: var(--bar-height);
+  width: 8px;
+  background: repeating-linear-gradient(
+    0deg,
+    var(--racing-blue) 0px,
+    var(--racing-blue) 20px,
+    var(--racing-yellow) 20px,
+    var(--racing-yellow) 40px,
+    var(--racing-red) 40px,
+    var(--racing-red) 60px
+  );
+  opacity: 0.3;
+  pointer-events: none;
+  animation: scroll-stripe 2s linear infinite reverse;
+}
+
+@keyframes scroll-stripe {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 60px;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================ */
+@media (max-width: 2559px) {
+  #top-bar,
+  #bottom-bar {
+    padding: 0 var(--padding-sm);
+  }
+  
+  .top-bar-left,
+  .top-bar-center,
+  .top-bar-right,
+  .bottom-bar-left,
+  .bottom-bar-center,
+  .bottom-bar-right {
+    gap: var(--padding-sm);
+  }
+}
+
+@media (min-width: 3440px) {
+  .stat-box,
+  .race-stat {
+    min-width: 140px;
+  }
+}

@@ -1,0 +1,278 @@
+/*
+ * camera.css
+ * Driver camera frame widget styling
+ * NASCAR 25 themed with racing borders and neon accents
+ */
+
+/* ============================================================
+   CAMERA WIDGET CONTAINER
+   ============================================================ */
+#camera-widget {
+  width: clamp(320px, 25vw, 480px);
+  height: clamp(180px, 14vw, 270px);
+  position: relative;
+  background: var(--bg-darker);
+  border: 3px solid var(--primary-color);
+  border-radius: var(--border-radius);
+  box-shadow: 
+    0 6px 20px var(--shadow-color),
+    0 0 20px var(--neon-color);
+  overflow: hidden;
+  animation: slideInRight var(--transition-slow) ease;
+}
+
+/* Camera feed placeholder (video element will go here) */
+#camera-feed {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--carbon-fiber);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  font-size: clamp(0.9rem, 1.2vw, 1.2rem);
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+
+/* ============================================================
+   CAMERA FRAME OVERLAY
+   ============================================================ */
+.camera-frame-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Top bar with driver name */
+.camera-top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: clamp(32px, 3.5vw, 48px);
+  background: linear-gradient(
+    180deg,
+    var(--bg-dark) 0%,
+    var(--bg-darker) 100%
+  );
+  border-bottom: 2px solid var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--padding-sm);
+  clip-path: polygon(0 0, 100% 0, 98% 100%, 0 100%);
+}
+
+.camera-driver-name {
+  font-size: clamp(0.85rem, 1vw, 1.1rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--text-color);
+  text-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.9),
+    0 0 8px var(--neon-color);
+  letter-spacing: 1px;
+  transform: skewX(-5deg);
+}
+
+.camera-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--racing-red);
+  box-shadow: 0 0 12px var(--racing-red);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Bottom bar with label */
+.camera-bottom-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: clamp(28px, 3vw, 40px);
+  background: linear-gradient(
+    0deg,
+    var(--bg-dark) 0%,
+    var(--bg-darker) 100%
+  );
+  border-top: 2px solid var(--secondary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--padding-sm);
+  clip-path: polygon(2% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.camera-label {
+  font-size: clamp(0.75rem, 0.9vw, 0.95rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  letter-spacing: 2px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+/* ============================================================
+   CORNER DECORATIONS
+   ============================================================ */
+.camera-corner {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 2px solid var(--neon-color);
+  opacity: 0.7;
+}
+
+.camera-corner.top-left {
+  top: 4px;
+  left: 4px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.camera-corner.top-right {
+  top: 4px;
+  right: 4px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.camera-corner.bottom-left {
+  bottom: 4px;
+  left: 4px;
+  border-right: none;
+  border-top: none;
+}
+
+.camera-corner.bottom-right {
+  bottom: 4px;
+  right: 4px;
+  border-left: none;
+  border-top: none;
+}
+
+/* ============================================================
+   RACING STRIPE ACCENT
+   ============================================================ */
+.camera-racing-stripe {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 60%;
+  background: linear-gradient(
+    0deg,
+    var(--racing-red) 0%,
+    var(--racing-yellow) 50%,
+    var(--racing-blue) 100%
+  );
+  opacity: 0.6;
+  border-radius: 0 3px 3px 0;
+}
+
+/* ============================================================
+   STATUS INDICATORS (Optional)
+   ============================================================ */
+.camera-status {
+  position: absolute;
+  top: clamp(36px, 4vw, 52px);
+  right: var(--padding-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.status-icon {
+  width: clamp(24px, 2.5vw, 32px);
+  height: clamp(24px, 2.5vw, 32px);
+  background: var(--bg-darker);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(0.7rem, 0.9vw, 0.9rem);
+  color: var(--text-color);
+  box-shadow: 0 2px 6px var(--shadow-color);
+}
+
+.status-icon.active {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 10px var(--accent-color);
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   HOVER EFFECTS (for interactive mode, if enabled)
+   ============================================================ */
+#camera-widget:hover {
+  border-color: var(--neon-color);
+  box-shadow: 
+    0 6px 24px var(--shadow-color),
+    0 0 30px var(--neon-color);
+}
+
+/* ============================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================ */
+@media (max-width: 2559px) {
+  #camera-widget {
+    width: clamp(280px, 22vw, 400px);
+    height: clamp(158px, 12.5vw, 225px);
+  }
+}
+
+@media (min-width: 3440px) {
+  #camera-widget {
+    width: clamp(400px, 28vw, 560px);
+    height: clamp(225px, 16vw, 315px);
+  }
+}
+
+/* ============================================================
+   ANIMATION VARIANTS
+   ============================================================ */
+.camera-widget-enter {
+  animation: slideInRight var(--transition-slow) ease;
+}
+
+.camera-widget-exit {
+  animation: slideOutRight var(--transition-slow) ease;
+}
+
+/* Optional: Skewed border variant */
+.camera-widget-skewed {
+  transform: skewX(-5deg);
+}
+
+.camera-widget-skewed #camera-feed {
+  transform: skewX(5deg);
+}
+
+/* Optional: Compact mode (smaller for multi-cam) */
+.camera-widget-compact {
+  width: clamp(240px, 18vw, 320px);
+  height: clamp(135px, 10vw, 180px);
+}
+
+.camera-widget-compact .camera-top-bar {
+  height: clamp(24px, 2.5vw, 36px);
+}
+
+.camera-widget-compact .camera-bottom-bar {
+  height: clamp(20px, 2vw, 28px);
+}
+
+.camera-widget-compact .camera-driver-name {
+  font-size: clamp(0.7rem, 0.85vw, 0.9rem);
+}
+
+.camera-widget-compact .camera-label {
+  font-size: clamp(0.65rem, 0.75vw, 0.8rem);
+}
